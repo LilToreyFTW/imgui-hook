@@ -1,5 +1,11 @@
 # RedEyedNinja-X – Final Release Setup
 
+## Owner Recognition
+
+- **Lil Torey** (toreyhancock10@gmail.com, bl0wdart) – Owner
+- Owner badge shows in Nav and Dashboard when signed in
+- ADMIN_USER_IDS = user_37mP4npI7kykjmfLG1UzKcV6q9m (Clerk user ID)
+
 ## Payment First – Downloads Only After Key
 
 - **Unauthenticated users**: No access to Loader or cheese.dll downloads
@@ -59,3 +65,11 @@ This makes Clerk sign-up/sign-in and Loader key validation work.
 ## Download (Dashboard Only)
 
 Loader and cheese.dll are **only** downloadable from the Dashboard when signed in with an approved key. Direct URLs redirect to sign-in. Payment first, then key, then download.
+
+## My Subscription Tab
+
+Users with keys see a **My Subscription** tab in the Dashboard showing:
+- Plan duration (1 Month, 3 Months, Lifetime, etc.)
+- Expiry date (if applicable)
+- Profile info (name, email)
+- Owner badge for admin

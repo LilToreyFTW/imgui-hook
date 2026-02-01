@@ -14,9 +14,11 @@ export async function POST(req: NextRequest) {
     const { id, email } = await req.json();
     if (!id || !email) return NextResponse.json({ error: 'id and email required' }, { status: 400 });
 
-    const key = await createKeyForEmail(email);
-
     const purchases = await loadPurchases();
+    const purchase = purchases.find((p) => p.id === id);
+    const plan = purchase?.plan;
+    const key = await createKeyForEmail(email, plan);
+
     const idx = purchases.findIndex((p) => p.id === id);
     if (idx >= 0) {
       purchases[idx].status = 'approved';

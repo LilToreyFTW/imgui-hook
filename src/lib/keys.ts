@@ -8,6 +8,7 @@ export interface SubscriptionKey {
   key: string;
   userId: string;
   email: string;
+  plan?: string;
   hwid?: string;
   createdAt: string;
   expiresAt?: string;
@@ -147,18 +148,74 @@ export async function getKeyForUser(userId: string, email?: string): Promise<str
   return key;
 }
 
-export async function createKeyForEmail(email: string): Promise<string> {
+export interface UserSubscription {
+  key: string;
+  plan: string;
+  expiresAt?: string;
+  isOwner: boolean;
+  email?: string;
+}
+
+export async function getSubscriptionForUser(userId: string, email?: string): Promise<UserSubscription | null> {
+  const adminIds = (process.env.ADMIN_USER_IDS ?? '').split(',').map((s) => s.trim()).filter(Boolean);
+  if (adminIds.includes(userId)) {
+    const ownerKey = process.env.OWNER_KEY?.trim();
+    if (ownerKey) {
+      return { key: ownerKey, plan: 'Owner', isOwner: true };
+    }
+  }
+  const keys = await loadKeys();
+  for (const entry of Object.values(keys)) {
+    if (!entry.active) continue;
+    if (entry.userId === userId || (email && entry.email.toLowerCase() === email.toLowerCase())) {
+      return {
+        key: entry.key,
+        plan: entry.plan ?? 'Lifetime',
+        expiresAt: entry.expiresAt,
+        isOwner: false,
+        email: entry.email,
+      };
+    }
+  }
+  return null;
+}
+
+export async function createKeyForEmail(email: string, plan?: string): Promise<string> {
   const keys = await loadKeys();
   const key = 'REN-' + [...crypto.getRandomValues(new Uint8Array(16))].map(b => b.toString(16).padStart(2, '0')).join('').toUpperCase();
+  const expiresAt = plan ? getExpiryForPlan(plan) : undefined;
   keys[key] = {
     key,
     userId: '',
     email: email.toLowerCase(),
+    plan: plan ?? 'Lifetime',
     createdAt: new Date().toISOString(),
+    expiresAt,
     active: true,
   };
   await saveKeys(keys);
   return key;
+}
+
+function getExpiryForPlan(plan: string): string | undefined {
+  const now = new Date();
+  if (plan.includes('1 Month')) {
+    now.setMonth(now.getMonth() + 1);
+    return now.toISOString();
+  }
+  if (plan.includes('3 Month')) {
+    now.setMonth(now.getMonth() + 3);
+    return now.toISOString();
+  }
+  if (plan.includes('6 Month')) {
+    now.setMonth(now.getMonth() + 6);
+    return now.toISOString();
+  }
+  if (plan.includes('12 Month')) {
+    now.setFullYear(now.getFullYear() + 1);
+    return now.toISOString();
+  }
+  return undefined; // Lifetime
 }
 
 const PURCHASES_FILE = join(process.cwd(), 'data', 'purchase-requests.json');

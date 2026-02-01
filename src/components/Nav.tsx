@@ -2,8 +2,36 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { SignInButton, SignUpButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import { SignInButton, SignUpButton, SignedIn, SignedOut, UserButton, useAuth } from "@clerk/nextjs";
 import { useAuthConfig } from "@/lib/auth-config";
+import { useEffect, useState } from "react";
+
+function OwnerBadge() {
+  const { getToken } = useAuth();
+  const [isOwner, setIsOwner] = useState(false);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const token = await getToken();
+        const res = await fetch("/api/key", {
+          headers: token ? { Authorization: `Bearer ${token}` } : {},
+        });
+        const d = await res.json();
+        setIsOwner(!!d.isOwner);
+      } catch {
+        setIsOwner(false);
+      }
+    })();
+  }, [getToken]);
+
+  if (!isOwner) return null;
+  return (
+    <span className="rounded bg-[#cd5c5c] px-2 py-1 text-xs font-bold text-white">
+      OWNER
+    </span>
+  );
+}
 
 export default function Nav() {
   const path = usePathname();
@@ -50,6 +78,7 @@ export default function Nav() {
                 </SignUpButton>
               </SignedOut>
               <SignedIn>
+                <OwnerBadge />
                 <UserButton />
               </SignedIn>
             </>
