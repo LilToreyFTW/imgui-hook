@@ -137,6 +137,16 @@ export async function getKeyByEmail(email: string): Promise<string | null> {
   return null;
 }
 
+export async function getKeyForUser(userId: string, email?: string): Promise<string | null> {
+  let key = await getUserKey(userId);
+  if (!key && email) key = await getKeyByEmail(email);
+  if (!key) {
+    const adminIds = (process.env.ADMIN_USER_IDS ?? '').split(',').map((s) => s.trim()).filter(Boolean);
+    if (adminIds.includes(userId)) key = process.env.OWNER_KEY?.trim() ?? null;
+  }
+  return key;
+}
+
 export async function createKeyForEmail(email: string): Promise<string> {
   const keys = await loadKeys();
   const key = 'REN-' + [...crypto.getRandomValues(new Uint8Array(16))].map(b => b.toString(16).padStart(2, '0')).join('').toUpperCase();

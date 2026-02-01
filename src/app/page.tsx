@@ -53,27 +53,22 @@ export default function Home() {
           </div>
         </div>
         <div className="mt-8 flex flex-wrap justify-center gap-4">
-          <a
-            href="/RedEyedNinja-X-Loader.exe"
-            download="RedEyedNinja-X-Loader.exe"
-            className="rounded-lg bg-[#2d2d2d] border border-zinc-700 px-8 py-3 font-medium text-white hover:bg-[#3d3d3d] hover:border-[#cd5c5c]"
-          >
-            Download Loader
-          </a>
-          <a
-            href="/cheese.dll"
-            download="cheese.dll"
-            className="rounded-lg bg-[#2d2d2d] border border-zinc-700 px-8 py-3 font-medium text-white hover:bg-[#3d3d3d] hover:border-[#cd5c5c]"
-          >
-            Download cheese.dll
-          </a>
           <Link
             href="/purchase"
             className="rounded-lg bg-[#cd5c5c] px-8 py-3 font-medium text-white hover:bg-[#b84a4a]"
           >
-            Get Access
+            Get Access – Payment Required
+          </Link>
+          <Link
+            href="/sign-in"
+            className="rounded-lg bg-[#2d2d2d] border border-zinc-700 px-8 py-3 font-medium text-white hover:bg-[#3d3d3d] hover:border-[#cd5c5c]"
+          >
+            Sign In
           </Link>
         </div>
+        <p className="mt-4 text-sm text-zinc-500">
+          Loader and cheese.dll are only available after payment and key approval.
+        </p>
       </section>
     </div>
   );

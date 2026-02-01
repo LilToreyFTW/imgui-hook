@@ -42,17 +42,24 @@ Follow these steps so the panel and Loader work for everyone.
 
 ---
 
-## 3. Registration Flow (New Users)
+## 3. Download Protection
+
+- Unauthenticated users cannot download the Loader or cheese.dll (redirected to sign-in)
+- Authenticated users without a key cannot download (must purchase and get approved first)
+- Only users with an approved key can download from the Dashboard
+
+## 4. Registration Flow (New Users)
 
 1. **Sign up** – Go to your site → **Sign Up** (Clerk).
 2. **Purchase request** – Go to **Purchase** → pick a plan → enter email and panel username → **Submit**.
 3. **Admin approval** – You sign in → go to **Admin** → verify payment → **Approve & Create Key**.
 4. **User gets key** – User signs in → goes to **Dashboard** → sees their key.
-5. **Loader login** – User enters the key in the Loader → Login (first use binds to their computer).
+5. **User downloads Loader and cheese.dll** – Download buttons appear in Dashboard only when key is assigned.
+6. **Loader login** – User enters the key in the Loader → Login (first use binds to their computer).
 
 ---
 
-## 4. Your Admin Login Flow
+## 5. Your Admin Login Flow
 
 1. Sign up or sign in on the panel with your Clerk account.
 2. Go to **Dashboard** – you’ll see your owner key (you’re in `ADMIN_USER_IDS`).
@@ -60,7 +67,7 @@ Follow these steps so the panel and Loader work for everyone.
 
 ---
 
-## 5. Troubleshooting
+## 6. Troubleshooting
 
 | Issue | Fix |
 |-------|-----|
@@ -71,7 +78,7 @@ Follow these steps so the panel and Loader work for everyone.
 
 ---
 
-## 6. Optional: Redis for Customer Keys (Vercel)
+## 7. Optional: Redis for Customer Keys (Vercel)
 
 For customer keys to persist on Vercel, add:
 

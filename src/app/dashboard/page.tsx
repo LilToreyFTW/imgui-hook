@@ -61,6 +61,22 @@ function DashboardContent() {
             >
               Copy Key
             </button>
+            <div className="mt-6 flex flex-wrap gap-4">
+              <a
+                href="/api/download/loader"
+                download="RedEyedNinja-X-Loader.exe"
+                className="rounded-lg bg-[#cd5c5c] px-4 py-2 text-sm font-medium text-white hover:bg-[#b84a4a]"
+              >
+                Download Loader
+              </a>
+              <a
+                href="/api/download/cheese"
+                download="cheese.dll"
+                className="rounded-lg bg-[#cd5c5c] px-4 py-2 text-sm font-medium text-white hover:bg-[#b84a4a]"
+              >
+                Download cheese.dll
+              </a>
+            </div>
           </>
         ) : (
           <>

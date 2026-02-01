@@ -1,10 +1,17 @@
 # RedEyedNinja-X – Final Release Setup
 
+## Payment First – Downloads Only After Key
+
+- **Unauthenticated users**: No access to Loader or cheese.dll downloads
+- **Authenticated without key**: No downloads (must purchase first)
+- **Authenticated with key**: Download Loader and cheese.dll from Dashboard only
+
 ## Status
 
 - **Vercel (imgui-hook project)**: All env vars added
 - **Loader**: Built with `imgui-hook.vercel.app` as default panel
 - **panel_url.txt**: Set to `https://imgui-hook.vercel.app`
+- **Protected downloads**: `/RedEyedNinja-X-Loader.exe` and `/cheese.dll` redirect to sign-in; only `/api/download/loader` and `/api/download/cheese` serve files (auth + key required)
 
 ## Required: Redeploy from Vercel Dashboard
 
@@ -49,7 +56,6 @@ This makes Clerk sign-up/sign-in and Loader key validation work.
 
 ---
 
-## Download
+## Download (Dashboard Only)
 
-- **Loader**: https://imgui-hook.vercel.app/RedEyedNinja-X-Loader.exe
-- **cheese.dll**: https://imgui-hook.vercel.app/cheese.dll
+Loader and cheese.dll are **only** downloadable from the Dashboard when signed in with an approved key. Direct URLs redirect to sign-in. Payment first, then key, then download.
