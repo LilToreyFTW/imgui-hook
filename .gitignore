@@ -32,3 +32,11 @@ Loader/*.db-wal
 
 # Reference (contains secrets - do not push)
 menu_base_to_code_from_but_check_for_backdoors_that_could_harm_my_computer_not_the_game_or_the_cheats_for_the_game/
+
+# Next.js / loader-panel
+node_modules/
+.next/
+out/
+.vercel
+.env*.local
+*.tsbuildinfo
