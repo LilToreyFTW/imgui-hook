@@ -80,6 +80,9 @@ function DashboardContent() {
       <p className="mt-6 text-sm text-zinc-500">
         Enter this key in the Loader and click Login. The key binds to your computer on first use (HWID).
       </p>
+      <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-600">
+        If login fails, check that panel_url.txt next to the Loader contains your Vercel URL (e.g. https://imgui-hook.vercel.app).
+      </p>
     </div>
   );
 }

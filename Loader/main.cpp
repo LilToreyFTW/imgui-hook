@@ -32,7 +32,7 @@ LRESULT CALLBACK BtnSubclassProc(HWND, UINT, WPARAM, LPARAM, UINT_PTR, DWORD_PTR
 
 #define LOCAL_DEV 0
 
-std::wstring g_panelHost = L"red-eyed-ninja-loader.vercel.app";
+std::wstring g_panelHost = L"imgui-hook.vercel.app";
 int g_panelPort = 443;
 bool g_useHttps = true;
 
