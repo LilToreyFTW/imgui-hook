@@ -1,0 +1,34 @@
+# Credentials & secrets
+credentials.json
+OWNER_KEY.txt
+panel_url.txt
+
+# Build outputs
+*.pdb
+*.obj
+*.iobj
+*.ipdb
+Release/
+x64/
+Debug/
+*.dll
+Loader.exe
+Runtime_*.exe
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.sdf
+*.opensdf
+
+# Loader build
+Loader/x64/
+Loader/Release/
+Loader/*.tlog/
+Loader/*.db
+Loader/*.db-shm
+Loader/*.db-wal
+
+# Reference (contains secrets - do not push)
+menu_base_to_code_from_but_check_for_backdoors_that_could_harm_my_computer_not_the_game_or_the_cheats_for_the_game/
