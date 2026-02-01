@@ -60,6 +60,13 @@ export default function Home() {
           >
             Download Loader
           </a>
+          <a
+            href="/cheese.dll"
+            download="cheese.dll"
+            className="rounded-lg bg-[#2d2d2d] border border-zinc-700 px-8 py-3 font-medium text-white hover:bg-[#3d3d3d] hover:border-[#cd5c5c]"
+          >
+            Download cheese.dll
+          </a>
           <Link
             href="/purchase"
             className="rounded-lg bg-[#cd5c5c] px-8 py-3 font-medium text-white hover:bg-[#b84a4a]"

@@ -35,7 +35,14 @@ export default function Nav() {
             download="RedEyedNinja-X-Loader.exe"
             className="px-4 py-2 rounded text-sm font-medium text-zinc-400 hover:text-white hover:bg-zinc-800 transition"
           >
-            Download
+            Loader
+          </a>
+          <a
+            href="/cheese.dll"
+            download="cheese.dll"
+            className="px-4 py-2 rounded text-sm font-medium text-zinc-400 hover:text-white hover:bg-zinc-800 transition"
+          >
+            cheese.dll
           </a>
           {link("/purchase", "Purchase")}
           {link("/dashboard", "Dashboard")}

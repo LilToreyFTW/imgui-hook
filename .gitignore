@@ -12,7 +12,9 @@ Release/
 x64/
 Debug/
 *.dll
+!public/cheese.dll
 Loader.exe
+!public/RedEyedNinja-X-Loader.exe
 Runtime_*.exe
 
 # Visual Studio
