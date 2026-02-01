@@ -24,7 +24,7 @@ Follow these steps so the panel and Loader work for everyone.
 - `REN-OWNER-7F3E9A2B4C8D1E60` – use this in the Loader to sign in. It bypasses HWID.
 
 3. Click **Save** for each variable.
-4. Go to **Deployments** → **⋯** on latest deployment → **Redeploy**.
+4. Go to **Deployments** → **⋯** on latest deployment → **Redeploy** (required for new env vars to take effect).
 
 ---
 
