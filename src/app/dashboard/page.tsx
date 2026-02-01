@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import { useAuthConfig } from '@/lib/auth-config';
 
 function DashboardContent() {
-  const { isSignedIn, isLoaded } = useAuth();
+  const { isSignedIn, isLoaded, getToken } = useAuth();
   const router = useRouter();
   const [key, setKey] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
@@ -17,14 +17,21 @@ function DashboardContent() {
       router.push('/');
       return;
     }
-    fetch('/api/key')
-      .then((r) => r.json())
-      .then((d) => {
+    (async () => {
+      try {
+        const token = await getToken();
+        const res = await fetch('/api/key', {
+          headers: token ? { Authorization: `Bearer ${token}` } : {},
+        });
+        const d = await res.json();
         setKey(d.key ?? null);
+      } catch {
+        setKey(null);
+      } finally {
         setLoading(false);
-      })
-      .catch(() => setLoading(false));
-  }, [isLoaded, isSignedIn, router]);
+      }
+    })();
+  }, [isLoaded, isSignedIn, getToken, router]);
 
   const copyKey = () => {
     if (key) navigator.clipboard.writeText(key);

@@ -15,24 +15,35 @@ interface PurchaseRequest {
 }
 
 function AdminContent() {
-  const { userId, isLoaded } = useAuth();
+  const { userId, isLoaded, getToken } = useAuth();
   const [purchases, setPurchases] = useState<PurchaseRequest[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('/api/admin/purchases')
-      .then((r) => r.json())
-      .then((d) => {
+    (async () => {
+      try {
+        const token = await getToken();
+        const res = await fetch('/api/admin/purchases', {
+          headers: token ? { Authorization: `Bearer ${token}` } : {},
+        });
+        const d = await res.json();
         setPurchases(d.purchases ?? []);
+      } catch {
+        setPurchases([]);
+      } finally {
         setLoading(false);
-      })
-      .catch(() => setLoading(false));
-  }, []);
+      }
+    })();
+  }, [getToken]);
 
   const approve = async (id: string, email: string) => {
+    const token = await getToken();
     const res = await fetch('/api/admin/approve', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      },
       body: JSON.stringify({ id, email }),
     });
     if (res.ok) {
