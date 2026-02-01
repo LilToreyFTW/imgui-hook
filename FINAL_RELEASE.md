@@ -5,6 +5,7 @@
 - **Lil Torey** (toreyhancock10@gmail.com, bl0wdart) – Owner
 - Owner badge shows in Nav and Dashboard when signed in
 - ADMIN_USER_IDS = user_37mP4npI7kykjmfLG1UzKcV6q9m (Clerk user ID)
+- OWNER_EMAIL = toreyhancock10@gmail.com (alternate owner check)
 
 ## Payment First – Downloads Only After Key
 

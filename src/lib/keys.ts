@@ -143,7 +143,9 @@ export async function getKeyForUser(userId: string, email?: string): Promise<str
   if (!key && email) key = await getKeyByEmail(email);
   if (!key) {
     const adminIds = (process.env.ADMIN_USER_IDS ?? '').split(',').map((s) => s.trim()).filter(Boolean);
-    if (adminIds.includes(userId)) key = process.env.OWNER_KEY?.trim() ?? null;
+    const ownerEmail = process.env.OWNER_EMAIL?.trim().toLowerCase();
+    const isOwner = adminIds.includes(userId) || (email && ownerEmail && email.toLowerCase() === ownerEmail);
+    if (isOwner) key = process.env.OWNER_KEY?.trim() ?? null;
   }
   return key;
 }
@@ -158,11 +160,10 @@ export interface UserSubscription {
 
 export async function getSubscriptionForUser(userId: string, email?: string): Promise<UserSubscription | null> {
   const adminIds = (process.env.ADMIN_USER_IDS ?? '').split(',').map((s) => s.trim()).filter(Boolean);
-  if (adminIds.includes(userId)) {
-    const ownerKey = process.env.OWNER_KEY?.trim();
-    if (ownerKey) {
-      return { key: ownerKey, plan: 'Owner', isOwner: true };
-    }
+  const ownerEmail = process.env.OWNER_EMAIL?.trim().toLowerCase();
+  const ownerKey = process.env.OWNER_KEY?.trim();
+  if (ownerKey && (adminIds.includes(userId) || (email && ownerEmail && email.toLowerCase() === ownerEmail))) {
+    return { key: ownerKey, plan: 'Owner', isOwner: true };
   }
   const keys = await loadKeys();
   for (const entry of Object.values(keys)) {

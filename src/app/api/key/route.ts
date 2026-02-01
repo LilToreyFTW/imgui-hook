@@ -14,7 +14,12 @@ export async function GET() {
 
   if (!subscription) {
     const ownerKey = process.env.OWNER_KEY?.trim();
-    if (ADMIN_USER_IDS.includes(userId) && ownerKey) {
+    const ownerEmail = process.env.OWNER_EMAIL?.trim().toLowerCase();
+    const isOwner = ownerKey && (
+      ADMIN_USER_IDS.includes(userId) ||
+      (email && ownerEmail && email.toLowerCase() === ownerEmail)
+    );
+    if (isOwner) {
       return NextResponse.json({ key: ownerKey, plan: 'Owner', isOwner: true });
     }
     return NextResponse.json({ key: null });
