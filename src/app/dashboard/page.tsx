@@ -3,8 +3,9 @@
 import { useAuth } from '@clerk/nextjs';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { useAuthConfig } from '@/lib/auth-config';
 
-export default function DashboardPage() {
+function DashboardContent() {
   const { isSignedIn, isLoaded } = useAuth();
   const router = useRouter();
   const [key, setKey] = useState<string | null>(null);
@@ -74,4 +75,17 @@ export default function DashboardPage() {
       </p>
     </div>
   );
+}
+
+export default function DashboardPage() {
+  const hasClerk = useAuthConfig();
+  if (!hasClerk) {
+    return (
+      <div className="p-8">
+        <h1 className="text-2xl font-bold">Dashboard</h1>
+        <p className="mt-2 text-zinc-400">Add Clerk keys in Vercel to enable dashboard.</p>
+      </div>
+    );
+  }
+  return <DashboardContent />;
 }

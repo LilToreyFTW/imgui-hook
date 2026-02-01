@@ -3,9 +3,11 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { SignInButton, SignUpButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import { useAuthConfig } from "@/lib/auth-config";
 
 export default function Nav() {
   const path = usePathname();
+  const hasClerk = useAuthConfig();
 
   const link = (href: string, label: string) => (
     <Link
@@ -40,21 +42,34 @@ export default function Nav() {
           {link("/admin", "Admin")}
         </div>
         <div className="flex items-center gap-2">
-          <SignedOut>
-            <SignInButton forceRedirectUrl="/dashboard">
-              <button className="rounded bg-zinc-800 px-4 py-2 text-sm font-medium text-zinc-300 hover:bg-zinc-700">
+          {hasClerk ? (
+            <>
+              <SignedOut>
+                <SignInButton forceRedirectUrl="/dashboard">
+                  <button className="rounded bg-zinc-800 px-4 py-2 text-sm font-medium text-zinc-300 hover:bg-zinc-700">
+                    Sign In
+                  </button>
+                </SignInButton>
+                <SignUpButton forceRedirectUrl="/dashboard">
+                  <button className="rounded bg-[#cd5c5c] px-4 py-2 text-sm font-medium text-white hover:bg-[#b84a4a]">
+                    Sign Up
+                  </button>
+                </SignUpButton>
+              </SignedOut>
+              <SignedIn>
+                <UserButton />
+              </SignedIn>
+            </>
+          ) : (
+            <>
+              <Link href="/sign-in" className="rounded bg-zinc-800 px-4 py-2 text-sm font-medium text-zinc-300 hover:bg-zinc-700">
                 Sign In
-              </button>
-            </SignInButton>
-            <SignUpButton forceRedirectUrl="/dashboard">
-              <button className="rounded bg-[#cd5c5c] px-4 py-2 text-sm font-medium text-white hover:bg-[#b84a4a]">
+              </Link>
+              <Link href="/sign-up" className="rounded bg-[#cd5c5c] px-4 py-2 text-sm font-medium text-white hover:bg-[#b84a4a]">
                 Sign Up
-              </button>
-            </SignUpButton>
-          </SignedOut>
-          <SignedIn>
-            <UserButton />
-          </SignedIn>
+              </Link>
+            </>
+          )}
         </div>
       </nav>
     </header>

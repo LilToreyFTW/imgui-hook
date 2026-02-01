@@ -3,6 +3,7 @@
 import { useAuth } from '@clerk/nextjs';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { useAuthConfig } from '@/lib/auth-config';
 
 interface PurchaseRequest {
   id: string;
@@ -13,7 +14,7 @@ interface PurchaseRequest {
   status: string;
 }
 
-export default function AdminPage() {
+function AdminContent() {
   const { userId, isLoaded } = useAuth();
   const [purchases, setPurchases] = useState<PurchaseRequest[]>([]);
   const [loading, setLoading] = useState(true);
@@ -81,4 +82,17 @@ export default function AdminPage() {
       )}
     </div>
   );
+}
+
+export default function AdminPage() {
+  const hasClerk = useAuthConfig();
+  if (!hasClerk) {
+    return (
+      <div className="p-8">
+        <h1 className="text-2xl font-bold text-white">Admin</h1>
+        <p className="mt-2 text-zinc-400">Add Clerk keys in Vercel to enable admin.</p>
+      </div>
+    );
+  }
+  return <AdminContent />;
 }
